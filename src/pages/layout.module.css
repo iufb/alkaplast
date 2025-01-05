@@ -1,0 +1,22 @@
+.link {
+    display: block;
+    padding: 5px 10px;
+    border: 2px solid var(--mantine-color-sky-9);
+    font-size: 1.2rem;
+    border-radius: 10px;
+    font-weight: bold;
+    color: var(--mantine-color-sky-9);
+    background: var(--mantine-color-sky-4);
+    cursor: pointer;
+}
+
+.menu {
+    position: absolute;
+    top: 60px;
+    width: 100px;
+    background: var(--mantine-color-sky-4);
+    color: var(--mantine-color-sky-9);
+    transition: max-height .4s cubic-bezier(0.455, 0.03, 0.515, 0.955), opacity .5s ease-in-out;
+    overflow: hidden;
+    border-radius: 10px;
+}
