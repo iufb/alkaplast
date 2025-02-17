@@ -1,10 +1,60 @@
-import { AppShell, Box, Burger, Group, Stack, Text, Title } from '@mantine/core';
+import { AppShell, Burger, Group, Image, Menu, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import clsx from 'clsx';
-import { useState } from 'react';
 import { Link, Outlet } from 'react-router';
-import styles from './layout.module.css';
 
+const links = [
+    {
+        label: "Пластиковые окна",
+        sublinks: [
+            {
+                label: "ARtes",
+                href: '/artes',
+                sublinks: []
+            },
+            {
+                label: "Exprof",
+                sublinks: [
+                    {
+                        href: "/exprof58",
+                        label: "Exprof 58",
+                        sublinks: []
+                    },
+                    {
+                        href: "/exprof70",
+                        label: "Exprof 70",
+                        sublinks: []
+                    },
+                    {
+                        href: "/exprof101",
+                        label: "Exprof 101",
+                        sublinks: []
+                    },
+                ]
+            },
+            {
+                label: "Galwin",
+                sublinks: [
+                    {
+                        href: "/galwin58",
+                        label: "Galwin 58",
+                        sublinks: []
+                    },
+
+                    {
+                        href: "/galwin70",
+                        label: "Galwin 70",
+                        sublinks: []
+                    },
+                ]
+            },
+        ],
+    },
+    {
+        href: "/calculator",
+        label: "Калькулятор",
+        sublinks: []
+    },
+]
 
 const windows = [
     { label: "Окно 1", href: "" },
@@ -15,7 +65,6 @@ const windows = [
 ]
 export function BaseLayout() {
     const [opened, { toggle }] = useDisclosure();
-
     return (
         <AppShell
             header={{ height: 60 }}
@@ -24,46 +73,27 @@ export function BaseLayout() {
         >
             <AppShell.Header>
                 <Group h="100%" px="md">
-                    <Title order={3}>
-                        Alka
-                        <Text
-                            style={{
-                                border: "2px solid var(--mantine-color-slate-6)",
-                                borderRadius: 10,
-                            }}
-                            ml={5}
-                            c={"sky.9"}
-                            fw={"bold"}
-                            bg={"sky.4"}
-                            px={10}
-                            py={5}
-                            size="xl"
-                            component="span"
-                        >
-                            Plast
-                        </Text>
-                    </Title>
+                    <Image src={'/Logo.png'} w={'auto'} height={60} />
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                     <Group justify="space-between" style={{ flex: 1 }}>
-                        <Group ml="xl" gap={20} visibleFrom="sm">
-                            <CustomLink type='group' href='$' label='Окна' children={windows} />
-                            <CustomLink type='content' href='$' label='Калькулятор' />
+                        <Group mx={'auto'} ml="xl" gap={20} visibleFrom="sm">
+                            {links.map(l =>
+                                <CustomLink key={l.href} isFirst={true} href={l.href} label={l.label} sublinks={l.sublinks} />
+                            )}
                         </Group>
                     </Group>
                 </Group>
             </AppShell.Header>
 
             <AppShell.Navbar py="md" px={4}>
-                <CustomLink type='content' href='$' label='Окна' />
-                <CustomLink type='content' href='$' label='Окна' />
             </AppShell.Navbar>
 
-            <AppShell.Main p={0}>
+            <AppShell.Main pt={60} maw={1400} mx={'auto'}>
                 <Outlet />
             </AppShell.Main>
             <footer>
                 <Stack bg={'#333333'} w={'100%'} h={100} p={20}>
-                    <Title fz={20} ta={'center'} c={'white'}>Alka plas  {new Date().getFullYear()}</Title>
+                    <Title fz={20} ta={'center'} c={'white'}>AlkaPlast  {new Date().getFullYear()}</Title>
                 </Stack>
             </footer>
         </AppShell>
@@ -72,25 +102,26 @@ export function BaseLayout() {
 }
 
 interface CustomLinkProps {
-    type: 'group' | 'content'
+    href?: string;
     label: string;
-    href: string;
-    children?: { label: string, href: string }[]
+    isFirst?: boolean;
+    sublinks: CustomLinkProps[]
 }
-const CustomLink = ({ children, type, label, href }: CustomLinkProps) => {
-    const [show, setShow] = useState(false)
-    switch (type) {
-        case 'group': return <Group style={{ position: 'relative' }}>
-            <button className={styles.link} onClick={() => setShow(!show)}>
-                {label}
-            </button>
-            <Box className={clsx(styles.menu)} style={{ maxHeight: show ? 50 * (children?.length ?? 0) : 0, cursor: 'pointer', opacity: show ? 1 : 0 }}>
-                <Stack ml={10} mx={10} gap={10} py={10}>
-                    {children?.map(({ label, href }, idx) => <Link type='content' to={href}>{label}</Link>)}
-                </Stack>
-            </Box>
-        </Group>;
+const CustomLink = ({ href, label, isFirst, sublinks }: CustomLinkProps) => {
+    if (href) return <Link to={href}><Text style={{ cursor: 'pointer' }} fw={'bold'} c={'primary'}>{label}</Text></Link>
+    return <Menu closeOnItemClick={false} position={isFirst ? 'bottom-start' : 'right-start'}>
+        <Menu.Target key={label}>
+            <Text style={{ cursor: 'pointer' }} fw={'bold'} c={'primary'}>{label}</Text>
+        </Menu.Target>
 
-        case 'content': return <Link className={styles.link} to={href}>{label}</Link>
-    }
+        <Menu.Dropdown key={label}>
+            {sublinks.map(l =>
+                <Menu.Item
+                    key={l.href}
+                >
+                    <CustomLink {...l} isFirst={false} />
+                </Menu.Item>
+            )}
+        </Menu.Dropdown>
+    </Menu>
 }

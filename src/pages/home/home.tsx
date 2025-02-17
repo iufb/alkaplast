@@ -1,4 +1,6 @@
-import { BackgroundImage, Box, Button, Card, Group, Stack, Text, Title } from "@mantine/core";
+import { Button, Group, Image, List, Stack, Text, ThemeIcon } from "@mantine/core";
+import { Check } from "lucide-react";
+import { Link } from "react-router";
 
 const features = [
     {
@@ -26,51 +28,79 @@ const features = [
         description: "С нашими надежными и проверенными годами партнерами мы гарантируем Вам безопасность. Противовзломная фурнитура нового поколения увеличивает время взлома с 5 до 10 минут."
     }
 ];
+
 export const HomePage = () => {
-    return <>
-        <BackgroundImage w={'100%'} h={'100vh'} src="/hero-image.jpg" style={{ position: 'relative' }}>
-            <Box bg={'rgba(0,0,0,.5)'} style={{ position: 'absolute', inset: 0, zIndex: 10 }} />
-            <Stack justify="center" align="end" h={'100%'} maw={1200} mx={'auto'}>
-                <Title style={{ zIndex: 100 }} fz={40} c={'white'}>Пластиковые окна в Семее<br />
-                    напрямую от Завода Окон<br />
-                    с гарантией 10 лет!</Title>
-                <Button bg={'sky.4'} c="sky.9" size="xl" style={{ zIndex: 100 }}>Самостоятельный рассчет Вашего окна</Button>
-            </Stack>
-        </BackgroundImage>
-        <Stack maw={1200} mx='auto' py={100}>
-            <Title ta={'center'} fz={40}>Окна без посредников в Семее от производителя</Title>
-            <Text ta={'center'} fz={20}>«Завод окон» - это стремление обеспечить высочайшее качество по честной цене</Text>
-        </Stack>
-        <BackgroundImage w={'100%'} h={'100vh'} src="/glazing.gif" style={{ position: 'relative' }} />
-        <Stack maw={1200} mx='auto' py={100}>
-            <Title style={{ borderLeft: '10px solid var(--mantine-color-sky-4)' }} pl={30} fz={40}>Плюсы наших окон:</Title>
-            <Text maw={500} fz={20}>Всесторонняя защита от осадков, закаленное внешнее стекло, морозостойкие стеклопакеты. Да, этими качествами обладают все мансардные окна. Но есть вещи, на которые обращаем внимание только мы. Ряд преимуществ, которые не увеличивают цену и улучшают жизнь.</Text>
-        </Stack>
-        <Group maw={1200} gap={20} mx={'auto'} wrap="wrap" justify="center">
-            {features.map(f =>
-                <Card
-                    w={350}
-                    h={400}
-                    shadow="lg"
-                    padding="2xl"
-                    component="div"
+    return <Stack>
+        <Group>
+            <Stack flex={1} gap={20}>
+                <Text lh={1} c={'primary'} fz={48} fw={'bold'} >Новые окна — комфорт на долгие годы!</Text>
+                <List
+                    spacing="xs"
+                    size="md"
+                    pl={20}
+                    c={'primary'}
+                    center
+                    icon={
+                        <ThemeIcon color="primary" size={24} radius="xl">
+                            <Check size={16} />
+                        </ThemeIcon>
+                    }
                 >
-                    <Card.Section h={160}>
-                        <Title ta={'center'}>{f.title}</Title>
-                    </Card.Section>
-
-                    <Text px={10}>{f.description}</Text>
-                </Card>
-            )}
+                    <List.Item>Тепло зимой, прохлада летом</List.Item>
+                    <List.Item>Тишина в доме и меньше счетов за отопление</List.Item>
+                    <List.Item>Установка за 1 день без грязи и пыли</List.Item>
+                </List>
+                <Button size="xl" component={Link} to={'/calculator'}>Получить бесплатный замер</Button>
+            </Stack>
+            <Image src={'/Hero.png'} height={600} flex={1} />
         </Group>
-
-        <Stack maw={1200} mx='auto' py={100}>
-            <Title ta={'center'} fz={40}>Как правильно выбрать фирму по окнам?</Title>
-            <Text ta={'start'} fz={20}>1.Старайтесь работать только с теми кого Вам посоветовали или с теми кто на слуху. Ну или хотя бы тех, кто имеет офис, цех т.е кого вы сможете найти если потребуется. Выбирая таким образом, вы сможете значительно снизить свои риски.<br /><br />
-
-                2. Выбирайте не только сердцем, но и умом. Если в процессе общения с замерщиком или менеджером у Вас возникают сомнения в их квалификации т.е они не могут доступным языком объяснить различные аспекты, связанные с окнами, это важный сигнал чтобы поискать ещё<br /><br />
-
-                3.Досконально уточняйте что вы получите за указанную сумму (Сливы? Сетки? Откосы клеятся или крепятся дюбелем? Наружная отделка включена? Стеклопакет двойной или тройной? Открывание простое или сложное?). Очень многие компании склонны озвучивать низкую цену и при замере значительно её увеличивать. Проводя такую разведку вы обезопасите себя от неприятных сюрпризов.</Text>
-        </Stack>
-    </>
+    </Stack>
 }
+// export const HomePage = () => {
+//     return <>
+//         <BackgroundImage w={'100%'} h={'100vh'} src="/hero-image.jpg" style={{ position: 'relative' }}>
+//             <Box bg={'rgba(0,0,0,.5)'} style={{ position: 'absolute', inset: 0, zIndex: 10 }} />
+//             <Stack justify="center" align="end" h={'100%'} maw={1200} mx={'auto'}>
+//                 <Title style={{ zIndex: 100 }} fz={40} c={'white'}>Пластиковые окна в Семее<br />
+//                     напрямую от Завода Окон<br />
+//                     с гарантией 10 лет!</Title>
+//                 <Button bg={'sky.4'} c="sky.9" size="xl" style={{ zIndex: 100 }}>Самостоятельный рассчет Вашего окна</Button>
+//             </Stack>
+//         </BackgroundImage>
+//         <Stack maw={1200} mx='auto' py={100}>
+//             <Title ta={'center'} fz={40}>Окна без посредников в Семее от производителя</Title>
+//             <Text ta={'center'} fz={20}>«Завод окон» - это стремление обеспечить высочайшее качество по честной цене</Text>
+//         </Stack>
+//         <BackgroundImage w={'100%'} h={'100vh'} src="/glazing.gif" style={{ position: 'relative' }} />
+//         <Stack maw={1200} mx='auto' py={100}>
+//             <Title style={{ borderLeft: '10px solid var(--mantine-color-sky-4)' }} pl={30} fz={40}>Плюсы наших окон:</Title>
+//             <Text maw={500} fz={20}>Всесторонняя защита от осадков, закаленное внешнее стекло, морозостойкие стеклопакеты. Да, этими качествами обладают все мансардные окна. Но есть вещи, на которые обращаем внимание только мы. Ряд преимуществ, которые не увеличивают цену и улучшают жизнь.</Text>
+//         </Stack>
+//         <Group maw={1200} gap={20} mx={'auto'} wrap="wrap" justify="center">
+//             {features.map(f =>
+//                 <Card
+//                     w={350}
+//                     h={400}
+//                     shadow="lg"
+//                     padding="2xl"
+//                     component="div"
+//                 >
+//                     <Card.Section h={160}>
+//                         <Title ta={'center'}>{f.title}</Title>
+//                     </Card.Section>
+//
+//                     <Text px={10}>{f.description}</Text>
+//                 </Card>
+//             )}
+//         </Group>
+//
+//         <Stack maw={1200} mx='auto' py={100}>
+//             <Title ta={'center'} fz={40}>Как правильно выбрать фирму по окнам?</Title>
+//             <Text ta={'start'} fz={20}>1.Старайтесь работать только с теми кого Вам посоветовали или с теми кто на слуху. Ну или хотя бы тех, кто имеет офис, цех т.е кого вы сможете найти если потребуется. Выбирая таким образом, вы сможете значительно снизить свои риски.<br /><br />
+//
+//                 2. Выбирайте не только сердцем, но и умом. Если в процессе общения с замерщиком или менеджером у Вас возникают сомнения в их квалификации т.е они не могут доступным языком объяснить различные аспекты, связанные с окнами, это важный сигнал чтобы поискать ещё<br /><br />
+//
+//                 3.Досконально уточняйте что вы получите за указанную сумму (Сливы? Сетки? Откосы клеятся или крепятся дюбелем? Наружная отделка включена? Стеклопакет двойной или тройной? Открывание простое или сложное?). Очень многие компании склонны озвучивать низкую цену и при замере значительно её увеличивать. Проводя такую разведку вы обезопасите себя от неприятных сюрпризов.</Text>
+//         </Stack>
+//     </>
+// }
