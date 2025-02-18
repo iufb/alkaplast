@@ -6,6 +6,7 @@ import { WorkerPage } from "@/pages/admin/worker";
 import { AdminWorkers } from "@/pages/admin/workers";
 import { HomePage } from "@/pages/home/home";
 import { BaseLayout } from "@/pages/layout";
+import '@mantine/carousel/styles.css';
 import { Route, Routes } from "react-router-dom";
 export const Pages = () => {
     return (

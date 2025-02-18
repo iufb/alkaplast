@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/carousel": "^7.17.0",
     "@mantine/core": "7.15.1",
     "@mantine/hooks": "7.15.1",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^7.1.0",
     "lucide-react": "^0.468.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

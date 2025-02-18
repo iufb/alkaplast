@@ -568,6 +568,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/carousel@npm:^7.17.0":
+  version: 7.17.0
+  resolution: "@mantine/carousel@npm:7.17.0"
+  peerDependencies:
+    "@mantine/core": 7.17.0
+    "@mantine/hooks": 7.17.0
+    embla-carousel-react: ">=7.0.0"
+    react: ^18.x || ^19.x
+    react-dom: ^18.x || ^19.x
+  checksum: 10c0/9fac123d2e3180684aaa5cd1f0492d54695fb1bb0ae0a604833d1c30e8ee65908a1eddbc408ea197ed965a40a2add74257b2a3e8d8b51e4e8b97306ca1449703
+  languageName: node
+  linkType: hard
+
 "@mantine/core@npm:7.15.1":
   version: 7.15.1
   resolution: "@mantine/core@npm:7.15.1"
@@ -1307,6 +1320,24 @@ __metadata:
   version: 1.5.66
   resolution: "electron-to-chromium@npm:1.5.66"
   checksum: 10c0/127a1140f3ad47c6992d6fb8ea84b3962efb52bc8e60a6ca3b722d417bf7741c92b8995fc4bd7a41943aa009ef951443361a7949e02a693461ed3ebabc053873
+  languageName: node
+  linkType: hard
+
+"embla-carousel-react@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "embla-carousel-react@npm:7.1.0"
+  dependencies:
+    embla-carousel: "npm:7.1.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.1 || ^18.0.0
+  checksum: 10c0/05e33fdb1062fde0164a0685163a5212f8e8f343fbe28e9a8e2348c989d8825d80fdcecfed485c7617d27f8f5d72b393612a3dd13ef9cffc02ef0cf21109ba51
+  languageName: node
+  linkType: hard
+
+"embla-carousel@npm:7.1.0":
+  version: 7.1.0
+  resolution: "embla-carousel@npm:7.1.0"
+  checksum: 10c0/3fcfe5b287c5d09d35dac76b6612567cf6f15abdae0bbf7d10754db9f732dd90cdfdf5bc7405d8fb3f65542bdead09971e93e024a0db9b3f1fcc653a70e733bc
   languageName: node
   linkType: hard
 
@@ -2846,12 +2877,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-min-template@workspace:."
   dependencies:
+    "@mantine/carousel": "npm:^7.17.0"
     "@mantine/core": "npm:7.15.1"
     "@mantine/hooks": "npm:7.15.1"
     "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.1"
     "@vitejs/plugin-react": "npm:^4.3.4"
     clsx: "npm:^2.1.1"
+    embla-carousel-react: "npm:^7.1.0"
     lucide-react: "npm:^0.468.0"
     postcss: "npm:^8.4.49"
     postcss-preset-mantine: "npm:1.17.0"

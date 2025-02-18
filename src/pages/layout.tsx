@@ -69,7 +69,6 @@ export function BaseLayout() {
         <AppShell
             header={{ height: 60 }}
             navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
-            padding="md"
         >
             <AppShell.Header>
                 <Group h="100%" px="md">
@@ -88,12 +87,12 @@ export function BaseLayout() {
             <AppShell.Navbar py="md" px={4}>
             </AppShell.Navbar>
 
-            <AppShell.Main pt={60} maw={1400} mx={'auto'}>
+            <AppShell.Main pt={60} >
                 <Outlet />
             </AppShell.Main>
             <footer>
-                <Stack bg={'#333333'} w={'100%'} h={100} p={20}>
-                    <Title fz={20} ta={'center'} c={'white'}>AlkaPlast  {new Date().getFullYear()}</Title>
+                <Stack mt={20} bg={'primary'} w={'100%'} p={10}>
+                    <Title fz={14} ta={'center'} c={'white'}>© {new Date().getFullYear()} AlkaPlast. Все права защищены.</Title>
                 </Stack>
             </footer>
         </AppShell>
