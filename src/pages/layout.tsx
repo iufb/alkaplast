@@ -8,25 +8,25 @@ const links = [
         label: "Пластиковые окна",
         sublinks: [
             {
-                label: "ARtes",
-                href: '/artes',
+                label: "ARtec",
+                href: '/window/artec',
                 sublinks: []
             },
             {
                 label: "Exprof",
                 sublinks: [
                     {
-                        href: "/exprof58",
+                        href: "/window/exprof58",
                         label: "Exprof 58",
                         sublinks: []
                     },
                     {
-                        href: "/exprof70",
+                        href: "/window/exprof70",
                         label: "Exprof 70",
                         sublinks: []
                     },
                     {
-                        href: "/exprof101",
+                        href: "/window/exprof101",
                         label: "Exprof 101",
                         sublinks: []
                     },
@@ -36,13 +36,13 @@ const links = [
                 label: "Galwin",
                 sublinks: [
                     {
-                        href: "/galwin58",
+                        href: "/window/galwin58",
                         label: "Galwin 58",
                         sublinks: []
                     },
 
                     {
-                        href: "/galwin70",
+                        href: "/window/galwin70",
                         label: "Galwin 70",
                         sublinks: []
                     },

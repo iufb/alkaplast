@@ -6,6 +6,7 @@ import { WorkerPage } from "@/pages/admin/worker";
 import { AdminWorkers } from "@/pages/admin/workers";
 import { HomePage } from "@/pages/home/home";
 import { BaseLayout } from "@/pages/layout";
+import { WindowPage } from "@/pages/window/window";
 import '@mantine/carousel/styles.css';
 import { Route, Routes } from "react-router-dom";
 export const Pages = () => {
@@ -21,6 +22,7 @@ export const Pages = () => {
                 </Route>
                 <Route element={<BaseLayout />}>
                     <Route path="home" element={<HomePage />} />
+                    <Route path="window/:name" element={<WindowPage />} />
                 </Route>
             </Route>
         </Routes>
