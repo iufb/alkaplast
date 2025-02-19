@@ -1,5 +1,6 @@
-import { AppShell, Burger, Group, Image, Menu, Stack, Text, Title } from '@mantine/core';
+import { AppShell, Box, Burger, Group, Image, Menu, NavLink, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { ChevronDown, ChevronRightIcon } from 'lucide-react';
 import { Link, Outlet } from 'react-router';
 
 const links = [
@@ -71,20 +72,21 @@ export function BaseLayout() {
             navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
         >
             <AppShell.Header>
-                <Group h="100%" px="md">
+                <Group h="100%" px="md" wrap='nowrap' justify='space-between'>
                     <Image src={'/Logo.png'} w={'auto'} height={60} />
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                    <Group justify="space-between" style={{ flex: 1 }}>
-                        <Group mx={'auto'} ml="xl" gap={20} visibleFrom="sm">
-                            {links.map(l =>
-                                <CustomLink key={l.href} isFirst={true} href={l.href} label={l.label} sublinks={l.sublinks} />
-                            )}
-                        </Group>
+                    <Group w={'100%'} justify='center' gap={20} visibleFrom="sm">
+                        {links.map(l =>
+                            <CustomLink key={l.href} isFirst={true} href={l.href} label={l.label} sublinks={l.sublinks} />
+                        )}
                     </Group>
                 </Group>
             </AppShell.Header>
 
             <AppShell.Navbar py="md" px={4}>
+                <Box mr={10}>
+                    {links.map(link => <MobileCustomLink {...link} />)}
+                </Box>
             </AppShell.Navbar>
 
             <AppShell.Main pt={60} >
@@ -99,6 +101,15 @@ export function BaseLayout() {
     );
 
 }
+const MobileCustomLink = ({ href, label, sublinks }: CustomLinkProps) => {
+    if (href) return <NavLink component={Link} to={href} label={label} />
+    return <NavLink label={label}>
+        {sublinks.map(s =>
+            <MobileCustomLink {...s} />
+        )}
+    </NavLink>
+
+}
 
 interface CustomLinkProps {
     href?: string;
@@ -110,7 +121,11 @@ const CustomLink = ({ href, label, isFirst, sublinks }: CustomLinkProps) => {
     if (href) return <Link to={href}><Text style={{ cursor: 'pointer' }} fw={'bold'} c={'primary'}>{label}</Text></Link>
     return <Menu closeOnItemClick={false} position={isFirst ? 'bottom-start' : 'right-start'}>
         <Menu.Target key={label}>
-            <Text style={{ cursor: 'pointer' }} fw={'bold'} c={'primary'}>{label}</Text>
+            <Group gap={1} >
+                <Text style={{ cursor: 'pointer' }} fw={'bold'} c={'primary'}>{label}</Text>
+                {isFirst ? <ChevronDown style={{ marginTop: 5 }} /> : <ChevronRightIcon />}
+            </Group>
+
         </Menu.Target>
 
         <Menu.Dropdown key={label}>
