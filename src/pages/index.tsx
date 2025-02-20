@@ -4,6 +4,7 @@ import { ProductPage } from "@/pages/admin/product";
 import { ProductsPage } from "@/pages/admin/products";
 import { WorkerPage } from "@/pages/admin/worker";
 import { AdminWorkers } from "@/pages/admin/workers";
+import { CalculatorPage } from "@/pages/calculator/CalculatorPage";
 import { HomePage } from "@/pages/home/home";
 import { BaseLayout } from "@/pages/layout";
 import { WindowPage } from "@/pages/window/window";
@@ -22,6 +23,7 @@ export const Pages = () => {
                 </Route>
                 <Route element={<BaseLayout />}>
                     <Route path="home" element={<HomePage />} />
+                    <Route path="calculator" element={<CalculatorPage />} />
                     <Route path="window/:name" element={<WindowPage />} />
                 </Route>
             </Route>

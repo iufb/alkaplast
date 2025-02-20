@@ -56,14 +56,6 @@ const links = [
         sublinks: []
     },
 ]
-
-const windows = [
-    { label: "Окно 1", href: "" },
-    { label: "Окно 2", href: "" },
-    { label: "Окно 3", href: "" },
-    { label: "Окно 4", href: "" },
-
-]
 export function BaseLayout() {
     const [opened, { toggle }] = useDisclosure();
     return (
@@ -73,7 +65,9 @@ export function BaseLayout() {
         >
             <AppShell.Header>
                 <Group h="100%" px="md" wrap='nowrap' justify='space-between'>
-                    <Image src={'/Logo.png'} w={'auto'} height={60} />
+                    <Link to={'/home'}>
+                        <Image src={'/Logo.png'} w={'auto'} height={60} />
+                    </Link>
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                     <Group w={'100%'} justify='center' gap={20} visibleFrom="sm">
                         {links.map(l =>
