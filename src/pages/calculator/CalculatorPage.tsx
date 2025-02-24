@@ -1,4 +1,5 @@
-import { Box, Button, Center, Divider, Group, Image, NumberInput, SimpleGrid, Stack, StackProps, Text, Title } from "@mantine/core"
+import { CreateApplication } from "@/features"
+import { Box, Center, Divider, Group, Image, NumberInput, SimpleGrid, Stack, StackProps, Text, Title } from "@mantine/core"
 import { useInputState } from "@mantine/hooks"
 import { useState } from "react"
 const variants = [
@@ -108,7 +109,7 @@ const Form = ({ windowProps, ...props }: CalculatorProps & StackProps) => {
                 </Stack>
             </Group>
             <Divider />
-            <Button>Заказать</Button>
+            <CreateApplication>Заказать</CreateApplication>
         </Stack>
     </form>
 }

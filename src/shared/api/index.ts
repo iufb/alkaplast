@@ -2,7 +2,6 @@ const backendUrl = import.meta.env.VITE_BACKENDURL
 interface CRequest {
     path: string;
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "UPDATE";
-    token?: string;
     query?: URLSearchParams | Record<string, any>;
     body?: { json?: unknown; multipart?: FormData };
 }
@@ -25,8 +24,9 @@ export const customFetch = async (params: CRequest) => {
     if (params.body?.json) {
         headers.set("Content-Type", "application/json");
     }
-    if (params.token) {
-        headers.set("authorization", params.token);
+    const token = localStorage.getItem('access')
+    if (token) {
+        headers.set("Authorization", 'Bearer ' + token);
     }
 
     const response = await fetch(url, {

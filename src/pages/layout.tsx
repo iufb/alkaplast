@@ -58,7 +58,7 @@ const links = [
     },
 ]
 export function BaseLayout() {
-    const [opened, { toggle }] = useDisclosure();
+    const [opened, { toggle, close: closeBurger }] = useDisclosure();
     return (
         <AppShell
             header={{ height: 60 }}
@@ -84,7 +84,7 @@ export function BaseLayout() {
 
             <AppShell.Navbar py="md" px={4}>
                 <Box mr={10}>
-                    {links.map(link => <MobileCustomLink key={link.label} {...link} />)}
+                    {links.map(link => <MobileCustomLink close={closeBurger} key={link.label} {...link} />)}
                 </Box>
             </AppShell.Navbar>
 
@@ -100,11 +100,12 @@ export function BaseLayout() {
     );
 
 }
-const MobileCustomLink = ({ href, label, sublinks }: CustomLinkProps) => {
-    if (href) return <NavLink component={Link} to={href} label={label} />
+const MobileCustomLink = ({ href, label, sublinks, close }: CustomLinkProps & { close: () => void }) => {
+
+    if (href) return <NavLink onClick={close} component={Link} to={href} label={label} />
     return <NavLink label={label}>
         {sublinks.map(s =>
-            <MobileCustomLink key={s.label} {...s} />
+            <MobileCustomLink close={close} key={s.label} {...s} />
         )}
     </NavLink>
 

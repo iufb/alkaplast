@@ -1,4 +1,5 @@
 import { AuthStatus } from "@/widgets";
+import { jwtDecode } from "jwt-decode";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 interface AuthStatus {
@@ -11,8 +12,10 @@ const AuthContext = createContext<AuthStatus | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [value, setValue] = useState({ isLogged: !!localStorage.getItem('access'), role: localStorage.getItem('role') })
-    const login = (role: string) => {
-        setValue({ isLogged: true, role: role })
+    const login = (access: string) => {
+        const data: { role: string } = jwtDecode(access)
+        console.log(data)
+        setValue({ isLogged: true, role: data.role })
     }
     const logout = () => {
         setValue({ isLogged: false, role: null })
