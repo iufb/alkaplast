@@ -24,7 +24,7 @@ interface CalculatorProps {
 }
 export const CalculatorPage = () => {
     const [windowProps, setWindowProps] = useState<WindowProps>({
-        url: variants[0].urls[0], maxW: 0, scale: 1.1
+        url: variants[0].urls[0], maxW: variants[0].maxW, scale: variants[0].scale
     })
     const selectVariant = (props: WindowProps) => {
         setWindowProps(props)
@@ -96,7 +96,7 @@ const Form = ({ windowProps, ...props }: CalculatorProps & StackProps) => {
                 <Stack >
                     <Text fz={20} c={'primary'}>Итоговая стоимость:</Text>
                     <Center p={5} bg={'secondary'} style={{ border: '2px solid var(--mantine-color-primary)}', borderRadius: 10 }}>
-                        <Text fw={'bold'} c={'primary'} fz={32}>{+width * +height * windowProps.scale}</Text>
+                        <Text fw={'bold'} c={'primary'} fz={32}>{Math.floor(+width * +height * windowProps.scale)}</Text>
                     </Center>
                 </Stack>
                 <Stack fz={18} c={'secondary'}>

@@ -1,3 +1,4 @@
+import { AuthStatus } from '@/widgets';
 import { AppShell, Box, Burger, Group, Image, Menu, NavLink, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { ChevronDown, ChevronRightIcon } from 'lucide-react';
@@ -68,18 +69,22 @@ export function BaseLayout() {
                     <Link to={'/home'}>
                         <Image src={'/Logo.png'} w={'auto'} height={60} />
                     </Link>
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                     <Group w={'100%'} justify='center' gap={20} visibleFrom="sm">
                         {links.map(l =>
-                            <CustomLink key={l.href} isFirst={true} href={l.href} label={l.label} sublinks={l.sublinks} />
+                            <CustomLink key={l.label} isFirst={true} href={l.href} label={l.label} sublinks={l.sublinks} />
                         )}
                     </Group>
+                    <Group>
+                        <AuthStatus />
+                        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                    </Group>
+
                 </Group>
             </AppShell.Header>
 
             <AppShell.Navbar py="md" px={4}>
                 <Box mr={10}>
-                    {links.map(link => <MobileCustomLink {...link} />)}
+                    {links.map(link => <MobileCustomLink key={link.label} {...link} />)}
                 </Box>
             </AppShell.Navbar>
 
@@ -99,7 +104,7 @@ const MobileCustomLink = ({ href, label, sublinks }: CustomLinkProps) => {
     if (href) return <NavLink component={Link} to={href} label={label} />
     return <NavLink label={label}>
         {sublinks.map(s =>
-            <MobileCustomLink {...s} />
+            <MobileCustomLink key={s.label} {...s} />
         )}
     </NavLink>
 
@@ -112,7 +117,7 @@ interface CustomLinkProps {
     sublinks: CustomLinkProps[]
 }
 const CustomLink = ({ href, label, isFirst, sublinks }: CustomLinkProps) => {
-    if (href) return <Link to={href}><Text style={{ cursor: 'pointer' }} fw={'bold'} c={'primary'}>{label}</Text></Link>
+    if (href) return <Link to={href}><Text w={'100%'} h={'100%'} style={{ cursor: 'pointer' }} fw={'bold'} c={'primary'}>{label}</Text></Link>
     return <Menu closeOnItemClick={false} position={isFirst ? 'bottom-start' : 'right-start'}>
         <Menu.Target key={label}>
             <Group gap={1} >

@@ -12,7 +12,7 @@ export const WindowPage = () => {
         <Group>
             <Image src={data.url} flex={1} />
             <Stack flex={2}>
-                {data.highlights.map((h, idx) => <Text c={'primary'} fw={'bold'}><Text component="span" py={2} px={8} fw={'bold'} style={{
+                {data.highlights.map((h, idx) => <Text key={idx} c={'primary'} fw={'bold'}><Text component="span" py={2} px={8} fw={'bold'} style={{
                     borderColor: Color('primary'),
                     borderWidth: 2,
                     borderRadius: '100%',
@@ -23,7 +23,7 @@ export const WindowPage = () => {
         <Group align="start" justify="space-evenly">
             <Stack>
                 <Text c={'primary'} fz={22}>Цвета для ламинации</Text>
-                <Group>{data.colors.map(c => <Stack align="center">
+                <Group>{data.colors.map(c => <Stack key={c.name} align="center">
                     <Image src={c.url} w={80} height={80} />
                     <Text c={'primary'}>{c.name}</Text>
                 </Stack>)}</Group>
@@ -31,10 +31,10 @@ export const WindowPage = () => {
             <Stack>
                 <Text c={'primary'} fz={22}>Характеристики профиля</Text>
                 <Stack>
-                    {data.stats.map((s, statNumber) => <Group justify="space-between">
+                    {data.stats.map((s, statNumber) => <Group key={s.label} justify="space-between">
                         <Text c={'secondary'}>{s.label}</Text>
                         <Group gap={3} >
-                            {new Array(18).fill('8').map((cell, idx) => <Box w={10} h={12} bg={idx >= s.value ? 'slate.3' : {
+                            {new Array(18).fill('8').map((cell, idx) => <Box key={idx} w={10} h={12} bg={idx >= s.value ? 'slate.3' : {
                                 0: "red", 1: 'green', 2: 'yellow'
                             }[statNumber]} />)}
                         </Group>

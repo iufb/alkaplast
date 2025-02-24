@@ -1,4 +1,5 @@
 import { rLogin } from "@/shared/api/auth"
+import { useAuth } from "@/shared/context/auth"
 import { useM } from "@/shared/hooks"
 import { Button, Image, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core"
 import { useInputState } from "@mantine/hooks"
@@ -16,12 +17,15 @@ export const LoginPage = () => {
 
 
 const Form = () => {
+    const { login } = useAuth()
     const [username, setLogin] = useInputState<string>('')
     const [pass, setPass] = useInputState<string>('')
     const navigate = useNavigate()
     const { mutate, isLoading, isError } = useM({
         fn: rLogin, mKey: 'login', onSuccess: (data) => {
             localStorage.setItem('access', data.access)
+            localStorage.setItem('role', data.role)
+            login(data.role)
             navigate('/home')
         }
     })

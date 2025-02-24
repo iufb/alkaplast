@@ -1,4 +1,5 @@
 import { Pages } from "@/pages/index.tsx";
+import { AuthProvider } from "@/shared/context/auth";
 import { theme } from "@/theme.ts";
 import '@mantine/carousel/styles.css';
 import { MantineProvider } from "@mantine/core";
@@ -12,8 +13,11 @@ const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
         <MantineProvider theme={theme}>
+
             <QueryClientProvider client={queryClient}>
-                <Pages />
+                <AuthProvider>
+                    <Pages />
+                </AuthProvider>
             </QueryClientProvider>
         </MantineProvider>
     </BrowserRouter>,

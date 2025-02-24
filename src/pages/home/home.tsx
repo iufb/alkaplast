@@ -1,5 +1,5 @@
 import { Carousel } from "@mantine/carousel";
-import { Accordion, Button, Group, Image, List, Paper, SimpleGrid, Stack, StackProps, Text, ThemeIcon } from "@mantine/core";
+import { Accordion, Button, Group, Image, List, Paper, SimpleGrid, Stack, StackProps, Text, TextProps, ThemeIcon } from "@mantine/core";
 import { Check, CircleHelpIcon, ClipboardCheck, FileText, Hammer, Headphones, Lock, Paintbrush, Ruler, Search, ShieldCheck, Volume2 } from "lucide-react";
 import { ReactNode } from "react";
 import { Link } from "react-router";
@@ -125,7 +125,7 @@ export const HomePage = () => {
         <Section>
             <Group>
                 <Stack flex={1} gap={20}>
-                    <SectionTitle>Новые окна — комфорт на долгие годы!</SectionTitle>
+                    <SectionTitle ta={{ base: 'center', md: 'start' }} >Новые окна — комфорт на долгие годы!</SectionTitle>
                     <List
                         spacing="xs"
                         size="md"
@@ -214,8 +214,8 @@ const Section = ({ children, ...props }: { children: ReactNode } & StackProps) =
         {children}
     </Stack>
 }
-const SectionTitle = ({ children }: { children: ReactNode }) => {
-    return <Text lh={1} c={'primary'} fz={{ base: 24, md: 32, lg: 42 }} fw={'bold'} >{children}</Text>
+const SectionTitle = ({ children, ...props }: { children: ReactNode } & TextProps) => {
+    return <Text lh={1} c={'primary'} fz={{ base: 23, md: 32, lg: 42 }} fw={'bold'} {...props} >{children}</Text>
 
 }
 
