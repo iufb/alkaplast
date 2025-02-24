@@ -4,11 +4,12 @@ import { ProductPage } from "@/pages/admin/product";
 import { ProductsPage } from "@/pages/admin/products";
 import { WorkerPage } from "@/pages/admin/worker";
 import { AdminWorkers } from "@/pages/admin/workers";
+import { LoginPage } from "@/pages/auth/LoginPage";
+import { RegisterPage } from "@/pages/auth/RegisterPage";
 import { CalculatorPage } from "@/pages/calculator/CalculatorPage";
 import { HomePage } from "@/pages/home/home";
 import { BaseLayout } from "@/pages/layout";
 import { WindowPage } from "@/pages/window/window";
-import '@mantine/carousel/styles.css';
 import { Route, Routes } from "react-router-dom";
 export const Pages = () => {
     return (
@@ -21,6 +22,8 @@ export const Pages = () => {
                     <Route path="products" element={<ProductsPage />} />
                     <Route path="products/:id" element={<ProductPage />} />
                 </Route>
+                <Route path="login" element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
                 <Route element={<BaseLayout />}>
                     <Route path="home" element={<HomePage />} />
                     <Route path="calculator" element={<CalculatorPage />} />

@@ -1,4 +1,4 @@
-import { Box, Button, Center, Divider, Group, Image, NumberInput, Stack, StackProps, Text, Title } from "@mantine/core"
+import { Box, Button, Center, Divider, Group, Image, NumberInput, SimpleGrid, Stack, StackProps, Text, Title } from "@mantine/core"
 import { useInputState } from "@mantine/hooks"
 import { useState } from "react"
 const variants = [
@@ -29,13 +29,13 @@ export const CalculatorPage = () => {
     const selectVariant = (props: WindowProps) => {
         setWindowProps(props)
     }
-    return <Stack pt={40} >
-        <Title ta={'center'} c={'primary'} fz={32} fw={'bold'}>ОНЛАЙН КАЛЬКУЛЯТОР</Title>
+    return <Stack pt={40} p={{ base: 10, md: 0 }}>
+        <Title ta={'center'} c={'primary'} fz={{ base: 25, lg: 32 }} fw={'bold'}>ОНЛАЙН КАЛЬКУЛЯТОР</Title>
 
-        <Group grow maw={1400} mx={'auto'} p={{ base: 10, md: 0 }}>
-            <TypeSelector wProps={windowProps} selectVariant={selectVariant} />
+        <SimpleGrid cols={{ base: 1, md: 2 }} maw={1400} mx={'auto'} >
+            <TypeSelector flex={1} wProps={windowProps} selectVariant={selectVariant} />
             <Form flex={1} windowProps={windowProps} />
-        </Group>
+        </SimpleGrid>
 
     </Stack>
 }
@@ -45,7 +45,7 @@ interface TypeSelectorProps extends StackProps {
 }
 const TypeSelector = ({ wProps, selectVariant, ...props }: TypeSelectorProps) => {
     return <Stack gap={30} {...props} >
-        <Title order={2} c={'primary'}>Тип окна</Title>
+        <Title order={4} c={'primary'}>Тип окна:</Title>
         <Group wrap="nowrap" px={20} py={10} bg={'slate.2'} >
             {variants.map(v =>
                 <Variant wProps={wProps} selectVariant={selectVariant} scale={v.scale} maxW={v.maxW} urls={v.urls} />
@@ -80,8 +80,8 @@ const Form = ({ windowProps, ...props }: CalculatorProps & StackProps) => {
     const [height, setHeight] = useInputState<string | number>('')
     return <form>
         <Stack {...props}>
-            <Text></Text>
-            <Group>
+            <Text c="primary" fz={18} fw={'bold'}>Размеры окна:</Text>
+            <Group grow>
                 <Stack gap={5}>
                     <Text c={'secondary'}>Ширина</Text>
                     <NumberInput defaultValue={0} max={windowProps.maxW} value={width} onChange={setWidth} suffix=" CM" />
@@ -92,7 +92,7 @@ const Form = ({ windowProps, ...props }: CalculatorProps & StackProps) => {
                 </Stack>
             </Group>
             <Divider />
-            <Group align="start" h={'100%'}>
+            <Group align="start" justify="space-evenly" h={'100%'}>
                 <Stack >
                     <Text fz={20} c={'primary'}>Итоговая стоимость:</Text>
                     <Center p={5} bg={'secondary'} style={{ border: '2px solid var(--mantine-color-primary)}', borderRadius: 10 }}>
@@ -100,7 +100,7 @@ const Form = ({ windowProps, ...props }: CalculatorProps & StackProps) => {
                     </Center>
                 </Stack>
                 <Stack fz={18} c={'secondary'}>
-                    окно в комплекте панельный дом:<br />
+                    окно в комплекте <br /> панельный дом:<br />
                     Откос<br />
                     Подоконник<br />
                     Слив<br />
