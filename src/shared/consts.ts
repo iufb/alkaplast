@@ -1,5 +1,9 @@
 export const Color = (color: string) => `var(--mantine-color-${color})`;
-
+export const ApplicationStatus = {
+    'Not accepted': 'В рассмотрении',
+    'Accepted': 'Принято'
+}
+export const WorkerRoles = ['Менеджер', 'Мастер']
 export const monthTranslations = {
     January: "Январь",
     February: "Февраль",

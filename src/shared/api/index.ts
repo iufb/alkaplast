@@ -3,22 +3,30 @@ interface CRequest {
     path: string;
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "UPDATE";
     query?: URLSearchParams | Record<string, any>;
-    body?: { json?: unknown; multipart?: FormData };
+    body?: { json?: Record<string, any>; multipart?: Record<string, any> };
 }
 export const customFetch = async (params: CRequest) => {
-    console.log(backendUrl)
     const url = new URL(`/api/${params.path}`, backendUrl);
-    console.log(url)
     url.search =
         params.query instanceof URLSearchParams
             ? params.query.toString()
             : new URLSearchParams(params.query).toString();
-    let body;
+    let body = null;
     if (params.body?.json) {
         body = JSON.stringify(params.body?.json);
     }
-    if (params.body?.multipart) {
-        body = params.body.multipart;
+    if (params.body) {
+        if (params.body.multipart) {
+            const formData = new FormData()
+            const data = params.body.multipart
+            Object.keys(data).forEach((key) => {
+                const value = data[key]
+                formData.append(key, value)
+            })
+            console.log(data)
+            console.log(formData)
+            body = formData
+        }
     }
     const headers = new Headers();
     if (params.body?.json) {

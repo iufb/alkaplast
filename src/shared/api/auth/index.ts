@@ -18,3 +18,17 @@ export const rRegister = (data: any) => {
         },
     );
 };
+export const rCreateWorker = (data: any) => {
+    return customFetch({
+        method: "POST",
+        path: "worker-register/",
+        body: { multipart: data }
+    })
+}
+export const rGetWorkers = (data: any) => {
+    return customFetch({
+        method: "POST",
+        path: "worker-register/",
+        body: { multipart: data }
+    })
+}
