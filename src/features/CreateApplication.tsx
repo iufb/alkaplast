@@ -1,8 +1,9 @@
 import { rCreateApplication } from "@/shared/api/applications";
 import { useM } from "@/shared/hooks";
-import { Button, Modal, Stack, Text, TextInput } from "@mantine/core";
+import { Button, Input, Modal, Stack, Text, TextInput } from "@mantine/core";
 import { useDisclosure, useInputState } from "@mantine/hooks";
 import { FormEvent, ReactNode } from "react";
+import { IMaskInput } from 'react-imask';
 
 export const CreateApplication = ({ children }: { children: ReactNode }) => {
     const [opened, { open, close }] = useDisclosure(false);
@@ -30,7 +31,7 @@ const Form = () => {
     }
     return <form onSubmit={submit}>
         <Stack>
-            <TextInput label="Телефон" value={tel} onChange={setTel} />
+            <Input component={IMaskInput} mask={"+7 (999) 999 99 99"} label="Телефон" value={tel} onChange={setTel} />
             <TextInput label="Адрес" value={address} onChange={setAddress} />
             {isError && <Text c={'red'}>Произошла ошибка при создании заявки</Text>}
             <Button type="submit" loading={isLoading} disabled={isLoading}>Отправить</Button>

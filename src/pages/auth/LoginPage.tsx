@@ -25,6 +25,7 @@ const Form = () => {
         fn: rLogin, mKey: 'login', onSuccess: (data) => {
             localStorage.setItem('access', data.access)
             localStorage.setItem('role', data.role)
+            localStorage.setItem('username', data.username)
             login(data.access)
             navigate('/home')
         }

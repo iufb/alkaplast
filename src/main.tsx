@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router";
 import "./globals.css";
 
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
         <MantineProvider theme={theme}>

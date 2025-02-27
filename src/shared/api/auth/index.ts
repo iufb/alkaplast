@@ -25,10 +25,4 @@ export const rCreateWorker = (data: any) => {
         body: { multipart: data }
     })
 }
-export const rGetWorkers = (data: any) => {
-    return customFetch({
-        method: "POST",
-        path: "worker-register/",
-        body: { multipart: data }
-    })
-}
+

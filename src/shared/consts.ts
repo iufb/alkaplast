@@ -1,4 +1,11 @@
 export const Color = (color: string) => `var(--mantine-color-${color})`;
+
+export const ProductCategory = [
+    "Основные материалы",
+    "Фурнитура",
+    "Уплотнители и герметики",
+    "Дополнительные элементы"
+]
 export const ApplicationStatus = {
     'Not accepted': 'В рассмотрении',
     'Accepted': 'Принято'

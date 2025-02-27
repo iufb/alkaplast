@@ -11,6 +11,8 @@ import { RegisterPage } from "@/pages/auth/RegisterPage";
 import { CalculatorPage } from "@/pages/calculator/CalculatorPage";
 import { HomePage } from "@/pages/home/home";
 import { BaseLayout } from "@/pages/layout";
+import { ManagerPage } from "@/pages/manager/ManagerPage";
+import { MasterPage } from "@/pages/master/MasterPage";
 import { WindowPage } from "@/pages/window/window";
 import { Navigate, Route, Routes } from "react-router-dom";
 export const Pages = () => {
@@ -26,6 +28,8 @@ export const Pages = () => {
                 </Route>
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />
+                <Route path="manager" element={<ManagerPage />} />
+                <Route path="master" element={<MasterPage />} />
                 <Route element={<BaseLayout />}>
                     <Route index element={<Navigate to="/home" replace />} />
                     <Route path="home" element={<HomePage />} />

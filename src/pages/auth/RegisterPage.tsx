@@ -1,8 +1,8 @@
 import { rRegister } from "@/shared/api/auth"
-import { useM } from "@/shared/hooks"
 import { Button, Image, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core"
 import { useInputState } from "@mantine/hooks"
 import { FormEvent } from "react"
+import { useMutation } from "react-query"
 import { Link, useNavigate } from "react-router"
 export const RegisterPage = () => {
     return <Stack mx={'auto'} maw={600} align="center" justify="center" w={'100%'} h={'100svh'}>
@@ -17,11 +17,17 @@ const Form = () => {
     const [username, setLogin] = useInputState<string>('')
     const [pass, setPass] = useInputState<string>('')
     const navigate = useNavigate()
-    const { mutate, isLoading, isError } = useM({
-        fn: rRegister, mKey: 'register', onSuccess: () => {
+    const { mutate, isError, isLoading } = useMutation({
+        mutationKey: ['register'],
+        mutationFn: rRegister,
+        onSuccess: (data) => {
             navigate('/login')
-        }
-    })
+        },
+        onError: (error) => {
+            // Handle error
+        },
+
+    });
     const onSubmit = (e: FormEvent) => {
         e.preventDefault()
         mutate({ username, password: pass })
