@@ -1,5 +1,6 @@
 import { CreateWorker } from "@/features/CreateWorker";
 import { rGetMasters } from "@/shared/api/workers";
+import { ImageFallback } from "@/shared/consts";
 import {
     Box,
     Flex,
@@ -33,7 +34,8 @@ const MastersTable = () => {
                 data?.map((w: any) =>
                     <Paper maw={1000} p={10} shadow="md">
                         <Group align="center">
-                            <Image maw={300} src={import.meta.env.VITE_BACKENDURL + w.photo} />
+                            <Image fallbackSrc={ImageFallback} maw={300} src={import.meta.env.VITE_BACKENDURL +
+                                '/media/' + w.photo} />
                             <Group align="center" flex={1} justify="space-evenly">
                                 <Stack>
                                     <Title order={4}>ФИО: {w.fio}</Title>

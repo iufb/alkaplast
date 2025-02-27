@@ -1,8 +1,11 @@
 import { rGetMasterApplications } from "@/shared/api/applications";
-import { ApplicationStatus } from "@/shared/consts";
-import { Skeleton, Stack, Table, Text, Title } from "@mantine/core";
+import { rGetMasterProducts, rMasterRequest } from "@/shared/api/products";
+import { ApplicationStatus, ImageFallback } from "@/shared/consts";
+import { Button, Drawer, Group, Image, Paper, ScrollArea, Select, Skeleton, Stack, Table, Text, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import dayjs from "dayjs";
-import { useQuery } from "react-query";
+import { useState } from "react";
+import { useMutation, useQuery } from "react-query";
 
 export const MasterPage = () => {
     return <Stack p={{ base: 10, lg: 0 }} pt={20} maw={1400} mx={'auto'}>
@@ -36,6 +39,7 @@ const MasterBoard = () => {
                                 <Table.Th>Адрес</Table.Th>
                                 <Table.Th>Статус</Table.Th>
                                 <Table.Th>Дата отправки</Table.Th>
+                                <Table.Th>Материалы</Table.Th>
                             </Table.Tr>
                         </Table.Thead>
                         <Table.Tbody>
@@ -45,6 +49,7 @@ const MasterBoard = () => {
                                     <Table.Td>{a.address}</Table.Td>
                                     <Table.Td>{ApplicationStatus[a.status as keyof typeof ApplicationStatus]}</Table.Td>
                                     <Table.Td>{dayjs(a.created_at).format('DD-MM-YYYY')}</Table.Td>
+                                    <Table.Td><RequestMaterials id={a.id} /></Table.Td>
                                 </Table.Tr>)}
                         </Table.Tbody>
 
@@ -52,3 +57,65 @@ const MasterBoard = () => {
         </Stack>
     );
 }
+const RequestMaterials = ({ id }: { id: number }) => {
+    const [opened, { open, close }] = useDisclosure(false);
+    const [selected, setSelected] = useState<Record<string, number>>({})
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['productlist'],
+        queryFn: async () => {
+            const data = await rGetMasterProducts();
+            return data
+        },
+        onSuccess: (data) => {
+            // Handle success
+        },
+        onError: (error) => {
+            // Handle error
+        },
+    });
+    const { mutate, isLoading: mutationLoading, isError: mutationError } = useMutation({
+        mutationFn: rMasterRequest,
+        onSuccess: (data) => {
+            // Handle success
+        },
+        onError: (error) => {
+            // Handle error
+        },
+
+    });
+    const setCount = (id: number, value: number) => {
+        setSelected({ ...selected, [id]: value })
+    }
+    return (
+        <>
+            <Drawer styles={{ body: { height: 'calc(100% - 85px)' } }} opened={opened} onClose={close} title="Запросить материалы">
+                {isLoading ? <Skeleton h={50} /> : (!data && isError) ? <Text c={'red'}>Ошибка загрузки...</Text> : <ScrollArea h={'100%'}>
+                    {data.map((p: any) =>
+                        <Paper shadow="lg" bg={'white'} p={5}>
+                            <Group key={p.id}>
+                                <Image w={80} fallbackSrc={ImageFallback} src={import.meta.env.VITE_BACKENDURL +
+                                    '/media/' + p.image} />
+                                <Stack gap={10} maw={300}>
+                                    <Text c={'primary'} fw={'bold'}>{p.name}</Text>
+                                    <Text c={'primary'}>{p.category}</Text>
+                                    <Text c={'secondary'}>{p.description}</Text>
+                                </Stack>
+                                <Select w={'100%'} value={selected[p.id]?.toString()} onChange={value => setCount(p.id, +(value ?? 0))} data={Array.from({ length: p.count }, (_, i) => `${i + 1}`)} />
+                                <Button fullWidth>Добавить</Button>
+                            </Group>
+                        </Paper>
+                    )}
+                </ScrollArea>}
+                <Button fullWidth onClick={() => {
+                    mutate({ data: selected, detail_id: id })
+                }}>Запросить</Button>
+
+            </Drawer>
+
+            <Button variant="default" onClick={open}>
+                Запросить
+            </Button>
+        </>
+    );
+}
+

@@ -1,6 +1,6 @@
 import { queryClient } from "@/main";
 import { rCreateProduct, rGetProducts, rPatchProduct } from "@/shared/api/products";
-import { ProductCategory } from "@/shared/consts";
+import { ImageFallback, ProductCategory } from "@/shared/consts";
 import { Button, FileInput, Flex, Group, Image, Modal, NumberInput, Paper, Popover, Select, Skeleton, Stack, Text, Textarea, TextInput, Title } from "@mantine/core";
 import { useDisclosure, useInputState } from "@mantine/hooks";
 import { FormEvent, ReactNode, useState } from "react";
@@ -78,9 +78,9 @@ const ProductList = () => {
     });
     return <Stack>
         <Title order={3} c={'primary'}>Продукты</Title>
-        {isLoading ? <Skeleton h={300} /> : (!data && isError) ? <Text>Ошибка загрузки...</Text> : <Stack>
+        {isLoading ? <Skeleton h={206} /> : (!data && isError) ? <Text>Ошибка загрузки...</Text> : <Stack>
             {data.map((p: any) => <Paper shadow="md" p={10}>
-                <Group><Image fallbackSrc="https://www.semfed.org.uk/wp-content/themes/artpop/assets/images/fallback-image.png" w={250} src={import.meta.env.VITE_BACKENDURL + '/media/' + p.image} />
+                <Group><Image fallbackSrc={ImageFallback} w={250} src={import.meta.env.VITE_BACKENDURL + '/media/' + p.image} />
                     <Stack>
                         <Text>Категория: {p.category}</Text>
                         <Text>Название: {p.name}</Text>

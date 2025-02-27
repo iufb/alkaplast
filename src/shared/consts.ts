@@ -1,5 +1,5 @@
 export const Color = (color: string) => `var(--mantine-color-${color})`;
-
+export const ImageFallback = "https://www.semfed.org.uk/wp-content/themes/artpop/assets/images/fallback-image.png"
 export const ProductCategory = [
     "Основные материалы",
     "Фурнитура",
