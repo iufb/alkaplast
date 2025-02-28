@@ -16,7 +16,13 @@ export const rGetManagerApplications = () => {
     })
 
 }
+export const rFinishApplication = (id: number) => {
+    return customFetch({
+        method: "PATCH", path: 'master/details/',
+        query: { detail_id: id }
+    })
 
+}
 export const rGetMasterApplications = async () => {
     const details: any[] = await customFetch({
         method: "GET", path: 'master/details',

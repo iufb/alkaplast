@@ -8,7 +8,8 @@ export const ProductCategory = [
 ]
 export const ApplicationStatus = {
     'Not accepted': 'В рассмотрении',
-    'Accepted': 'Принято'
+    'Accepted': 'Принято',
+    "Done": "Завершено"
 }
 export const WorkerRoles = ['Менеджер', 'Мастер']
 export const monthTranslations = {

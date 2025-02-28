@@ -1,8 +1,9 @@
+import { useAuth } from '@/shared/context/auth';
 import { AuthStatus } from '@/widgets';
-import { AppShell, Box, Burger, Group, Image, Menu, NavLink, Stack, Text, Title } from '@mantine/core';
+import { AppShell, Box, Burger, Button, ButtonProps, Group, Image, Menu, NavLink, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { ChevronDown, ChevronRightIcon } from 'lucide-react';
-import { Link, Outlet } from 'react-router';
+import { ArrowRight, ChevronDown, ChevronRightIcon } from 'lucide-react';
+import { Link, Outlet, useNavigate } from 'react-router';
 
 const links = [
     {
@@ -74,8 +75,9 @@ export function BaseLayout() {
                             <CustomLink key={l.label} isFirst={true} href={l.href} label={l.label} sublinks={l.sublinks} />
                         )}
                     </Group>
-                    <Group>
+                    <Group w={{ base: 'auto', md: 340 }}>
                         <AuthStatus />
+                        <Logout visibleFrom='md' />
                         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                     </Group>
 
@@ -99,6 +101,16 @@ export function BaseLayout() {
         </AppShell>
     );
 
+}
+const Logout = ({ ...props }: ButtonProps) => {
+    const { logout, isLogged } = useAuth()
+    if (!isLogged) { return; }
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        logout()
+        navigate('/home')
+    }
+    return <Button onClick={handleLogout} rightSection={<ArrowRight size={14} />} {...props}>Выйти</Button>
 }
 const MobileCustomLink = ({ href, label, sublinks, close }: CustomLinkProps & { close: () => void }) => {
 
