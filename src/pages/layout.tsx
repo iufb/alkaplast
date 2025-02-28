@@ -80,14 +80,14 @@ export function BaseLayout() {
                         <Logout visibleFrom='md' />
                         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                     </Group>
-
                 </Group>
             </AppShell.Header>
 
             <AppShell.Navbar py="md" px={4}>
-                <Box mr={10}>
+                <Box flex={1} mr={10}>
                     {links.map(link => <MobileCustomLink close={closeBurger} key={link.label} {...link} />)}
                 </Box>
+                <Logout hiddenFrom='md' />
             </AppShell.Navbar>
 
             <AppShell.Main pt={60} >

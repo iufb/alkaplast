@@ -7,6 +7,7 @@
         "@mantine/carousel": "^7.17.0",
         "@mantine/core": "7.15.1",
         "@mantine/hooks": "7.15.1",
+        "@mantine/notifications": "^7.17.0",
         "clsx": "^2.1.1",
         "dayjs": "^1.11.13",
         "embla-carousel-react": "^7.1.0",
@@ -176,6 +177,10 @@
     "@mantine/core": ["@mantine/core@7.15.1", "", { "dependencies": { "@floating-ui/react": "^0.26.28", "clsx": "^2.1.1", "react-number-format": "^5.4.2", "react-remove-scroll": "^2.6.0", "react-textarea-autosize": "8.5.5", "type-fest": "^4.27.0" }, "peerDependencies": { "@mantine/hooks": "7.15.1", "react": "^18.x || ^19.x", "react-dom": "^18.x || ^19.x" } }, "sha512-MKHrByqgpu+vzhauX0X9EH+BOgJqyjHwk4E0sfIIX9CXC9pziLMc4aL8pua0KaXiRuQiskTl/DuGX31saHBH5g=="],
 
     "@mantine/hooks": ["@mantine/hooks@7.15.1", "", { "peerDependencies": { "react": "^18.x || ^19.x" } }, "sha512-jrpjA5JhVSgUi0expfZpvNplMgvwdvrCIcKiDjQ16p/KiWngvTVfmJMtBOVxQ6hWrn500nLmZIDEcTmV9Dvb7g=="],
+
+    "@mantine/notifications": ["@mantine/notifications@7.17.0", "", { "dependencies": { "@mantine/store": "7.17.0", "react-transition-group": "4.4.5" }, "peerDependencies": { "@mantine/core": "7.17.0", "@mantine/hooks": "7.17.0", "react": "^18.x || ^19.x", "react-dom": "^18.x || ^19.x" } }, "sha512-xejr1WW02NrrrE4HPDoownILJubcjLLwCDeTk907ZeeHKBEPut7RukEq6gLzOZBhNhKdPM+vCM7GcbXdaLZq/Q=="],
+
+    "@mantine/store": ["@mantine/store@7.17.0", "", { "peerDependencies": { "react": "^18.x || ^19.x" } }, "sha512-nhWRYRLqvAjrD/ApKCXxuHyTWg2b5dC06Z5gmO8udj4pBgndNf9nmCl+Of90H6bgOa56moJA7UQyXoF1SfxqVg=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 

@@ -1,6 +1,7 @@
 import { rRegister } from "@/shared/api/auth"
 import { Button, Image, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core"
 import { useInputState } from "@mantine/hooks"
+import { notifications } from "@mantine/notifications"
 import { FormEvent } from "react"
 import { useMutation } from "react-query"
 import { Link, useNavigate } from "react-router"
@@ -21,10 +22,20 @@ const Form = () => {
         mutationKey: ['register'],
         mutationFn: rRegister,
         onSuccess: (data) => {
+            notifications.show({
+                title: 'Успешная регистрация',
+                message: 'Войдите, чтобы продолжить',
+                color: 'green'
+            })
             navigate('/login')
         },
         onError: (error) => {
-            // Handle error
+            notifications.show({
+                title: 'Ошибка',
+                message: 'Произошла ошибка при регистрации',
+                color: 'red'
+            })
+
         },
 
     });

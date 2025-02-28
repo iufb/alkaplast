@@ -4,12 +4,13 @@ import { rChainMaster, rGetMasters } from "@/shared/api/workers";
 import { ApplicationStatus } from "@/shared/consts";
 import { Box, Button, Drawer, Group, ScrollArea, Skeleton, Stack, Table, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import dayjs from "dayjs";
 import { FormEvent, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 
 export const ManagerPage = () => {
-    return <Stack p={{ base: 10, lg: 0 }} pt={20} maw={1400} mx={'auto'}>
+    return <Stack p={{ base: 10 }} pt={20} maw={1400} mx={'auto'}>
         <Title ta={'center'} order={3} c={'primary'}>Панель управления для менеджеров</Title>
         <ManagerBoard />
     </Stack>
@@ -22,26 +23,20 @@ const ManagerBoard = () => {
             const response = await rGetManagerApplications();
             return response;
         },
-        onSuccess: (data) => {
-            // Handle success
-        },
-        onError: (error) => {
-            // Handle error
-        },
     });
     return (
         <Stack>
             <Title order={4} c={'primary'}>Необработанные заявки</Title>
             {isLoading ? <Skeleton height={400} /> : (isError && !data) ? <Text c={'red'}>Ошибка загрузки...</Text> : data.length == 0 ? <Text c={'secondary'}>Нет заявок</Text> :
                 <Table.ScrollContainer minWidth={290}>
-                    <Table>
-                        <Table.Thead>
+                    <Table ta={'center'} withTableBorder withColumnBorders>
+                        <Table.Thead >
                             <Table.Tr>
-                                <Table.Th>Телефон</Table.Th>
-                                <Table.Th>Адрес</Table.Th>
-                                <Table.Th>Статус</Table.Th>
-                                <Table.Th>Дата отправки</Table.Th>
-                                <Table.Th>Связать с мастером</Table.Th>
+                                <Table.Th ta={'center'}>Телефон</Table.Th>
+                                <Table.Th ta={'center'}>Адрес</Table.Th>
+                                <Table.Th ta={'center'}>Статус</Table.Th>
+                                <Table.Th ta={'center'}>Дата отправки</Table.Th>
+                                <Table.Th ta={'center'}>Связать с мастером</Table.Th>
                             </Table.Tr>
                         </Table.Thead>
                         <Table.Tbody>
@@ -85,26 +80,26 @@ const Form = ({ applicationId, close }: ConnectProps & { close: () => void }) =>
         queryFn: async () => {
             const response = await rGetMasters();
             return response;
-        },
-        onSuccess: (data) => {
-            close()
-        },
-        onError: (error) => {
-            // Handle error
-        },
-
+        }
     });
     const { mutate, isLoading: mutationLoading, isError: mutationError } = useMutation({
         mutationFn: rChainMaster,
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ['masterSelect'] })
+            notifications.show({
+                title: 'Успешно',
+                message: 'Мастер успешно привязан',
+                color: 'green'
+            });
+            queryClient.invalidateQueries({ queryKey: ['masterSelect'] });
         },
         onError: (error) => {
-            // Handle error
+            notifications.show({
+                title: 'Ошибка',
+                message: 'Произошла ошибка при привязке мастера',
+                color: 'red'
+            });
         },
-
     });
-
     const submit = (e: FormEvent) => {
         e.preventDefault()
         mutate({ "request_id": applicationId, "worker_id": selected })

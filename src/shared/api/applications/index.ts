@@ -24,9 +24,9 @@ export const rFinishApplication = (id: number) => {
 
 }
 export const rGetMasterApplications = async () => {
-    const details: any[] = await customFetch({
+    const details: any[] = (await customFetch({
         method: "GET", path: 'master/details',
-    })
+    })).filter((d: any) => d.measurement_date == null)
     const promises: Promise<any>[] = []
     details.forEach(d => {
         promises.push(customFetch({

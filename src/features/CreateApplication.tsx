@@ -31,7 +31,13 @@ const Form = () => {
     }
     return <form onSubmit={submit}>
         <Stack>
-            <Input component={IMaskInput} mask={"+7 (999) 999 99 99"} label="Телефон" value={tel} onChange={setTel} />
+            <Input
+                component={IMaskInput}
+                mask="+7 (000) 000-00-00"
+                label="Телефон"
+                value={tel}
+                onAccept={(value) => setTel(value)}
+            />
             <TextInput label="Адрес" value={address} onChange={setAddress} />
             {isError && <Text c={'red'}>Произошла ошибка при создании заявки</Text>}
             <Button type="submit" loading={isLoading} disabled={isLoading}>Отправить</Button>

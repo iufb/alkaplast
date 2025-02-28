@@ -3,6 +3,7 @@ import { rCreateProduct, rGetProducts, rPatchProduct } from "@/shared/api/produc
 import { ImageFallback, ProductCategory } from "@/shared/consts";
 import { Button, FileInput, Flex, Group, Image, Modal, NumberInput, Paper, Popover, Select, Skeleton, Stack, Text, Textarea, TextInput, Title } from "@mantine/core";
 import { useDisclosure, useInputState } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { FormEvent, ReactNode, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 
@@ -37,12 +38,23 @@ const Form = () => {
     const [photo, setPhoto] = useState<File | null>(null)
     const [pass, setPass] = useInputState('')
     const [category, setCategory] = useInputState(ProductCategory[0])
-    const [res, setRes] = useState('')
     const { mutate, isLoading, isError } = useMutation({
         mutationKey: ['CreateProduct'], mutationFn: rCreateProduct,
         onSuccess: () => {
-            setRes("Продукт создан")
+            notifications.show({
+                title: 'Создано',
+                message: 'Продукт создан',
+                color: 'green'
+            })
+
             queryClient.invalidateQueries({ queryKey: ['productlist'] })
+        }, onError: () => {
+            notifications.show({
+                title: 'Ошибка',
+                message: 'Продукт не создан',
+                color: 'red'
+            })
+
         }
     })
     const submit = (e: FormEvent) => {
@@ -56,7 +68,6 @@ const Form = () => {
             <FileInput label="Фото" value={photo} onChange={setPhoto} />
             <Select label={'Категория'} data={ProductCategory} value={category} onChange={setCategory} />
             {isError && <Text c={'red'}>Произошла ошибка при создании продукта</Text>}
-            {res && <Text c={'green'}>{res}</Text>}
             <Button type="submit" loading={isLoading} disabled={isLoading}>Добавить</Button>
         </Stack>
     </form>
@@ -68,13 +79,6 @@ const ProductList = () => {
             const data = await rGetProducts();
             return data
         },
-        onSuccess: (data) => {
-            // Handle success
-        },
-        onError: (error) => {
-            // Handle error
-        },
-
     });
     return <Stack>
         <Title order={3} c={'primary'}>Продукты</Title>
@@ -105,11 +109,20 @@ const ChangeCountPopover = ({ count, id }: { count: number, id: number }) => {
     const { mutate, isLoading, isError } = useMutation({
         mutationFn: rPatchProduct,
         onSuccess: (data) => {
+            notifications.show({
+                title: 'Изменено',
+                message: 'Количество продукта изменено',
+                color: 'green'
+            })
             queryClient.invalidateQueries({ queryKey: ['productlist'] })
             setOpened(false)
         },
         onError: (error) => {
-            // Handle error
+            notifications.show({
+                title: 'Ошибка',
+                message: 'Произошла ошибка при изменении количества',
+                color: 'red'
+            })
         },
 
     });

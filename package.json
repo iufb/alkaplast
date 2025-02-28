@@ -12,6 +12,7 @@
         "@mantine/carousel": "^7.17.0",
         "@mantine/core": "7.15.1",
         "@mantine/hooks": "7.15.1",
+        "@mantine/notifications": "^7.17.0",
         "clsx": "^2.1.1",
         "dayjs": "^1.11.13",
         "embla-carousel-react": "^7.1.0",

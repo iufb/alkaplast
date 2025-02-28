@@ -1,9 +1,10 @@
 import { rLogin } from "@/shared/api/auth"
 import { useAuth } from "@/shared/context/auth"
-import { useM } from "@/shared/hooks"
 import { Button, Image, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core"
 import { useInputState } from "@mantine/hooks"
+import { notifications } from "@mantine/notifications"
 import { FormEvent } from "react"
+import { useMutation } from "react-query"
 import { Link, useNavigate } from "react-router"
 
 export const LoginPage = () => {
@@ -21,13 +22,30 @@ const Form = () => {
     const [username, setLogin] = useInputState<string>('')
     const [pass, setPass] = useInputState<string>('')
     const navigate = useNavigate()
-    const { mutate, isLoading, isError } = useM({
-        fn: rLogin, mKey: 'login', onSuccess: (data) => {
+    const { mutate, isLoading, isError } = useMutation({
+        mutationFn: rLogin, mutationKey: ['login'], onSuccess: (data) => {
             localStorage.setItem('access', data.access)
             localStorage.setItem('role', data.role)
             localStorage.setItem('username', data.username)
             login(data.access)
-            navigate('/home')
+            notifications.show({
+                title: 'Успешный вход',
+                message: 'Вы вошли в аккаунт',
+                color: 'green'
+            })
+
+            if (data.role == 'User') {
+                navigate('/home')
+                return;
+            }
+            navigate(`/${data.role}`)
+        }, onError: () => {
+            notifications.show({
+                title: 'Ошибка',
+                message: 'Ошибка при входе',
+                color: 'red'
+            })
+
         }
     })
 

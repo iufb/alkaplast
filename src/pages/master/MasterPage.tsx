@@ -1,8 +1,10 @@
+import { queryClient } from "@/main";
 import { rFinishApplication, rGetMasterApplications } from "@/shared/api/applications";
 import { rGetMasterProducts, rGetRequestedItems, rGetRequestedProducts, rMasterRequest } from "@/shared/api/products";
 import { ApplicationStatus, ImageFallback } from "@/shared/consts";
 import { Button, Drawer, Group, Image, Paper, ScrollArea, Select, Skeleton, Stack, Table, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
@@ -21,14 +23,8 @@ const MasterBoard = () => {
             const response = await rGetMasterApplications();
             return response;
         },
-        onSuccess: (data) => {
-            // Handle success
-        },
-        onError: (error) => {
-            // Handle error
-        },
     });
-
+    console.log(data)
     return (
         <Stack>
             <Title order={4} c={'primary'}>Необработанные заявки</Title>
@@ -65,14 +61,21 @@ const Finish = ({ id }: { id: number }) => {
     const { mutate, isLoading, isError } = useMutation({
         mutationFn: rFinishApplication,
         onSuccess: (data) => {
-            // Handle success
+            notifications.show({
+                title: 'Успешно',
+                message: 'Заявка успешно завершена',
+                color: 'green'
+            });
+            queryClient.invalidateQueries({ queryKey: ['masterBoard'] });
         },
         onError: (error) => {
-            // Handle error
+            notifications.show({
+                title: 'Ошибка',
+                message: 'Произошла ошибка при завершении заявки',
+                color: 'red'
+            });
         },
-
-    });
-    return <Button loading={isLoading} disabled={isLoading} onClick={() => mutate(id)}>Завершить</Button>
+    }); return <Button loading={isLoading} disabled={isLoading} onClick={() => mutate(id)}>Завершить</Button>
 }
 const RequestMaterials = ({ id }: { id: number }) => {
     const [opened, { open, close }] = useDisclosure(false);
@@ -82,16 +85,8 @@ const RequestMaterials = ({ id }: { id: number }) => {
             const data = await rGetRequestedItems(id);
             return data
         },
-        onSuccess: (data) => {
-            // Handle success
-        },
-        onError: (error) => {
-            // Handle error
-        },
-
     });
-    console.log(requestedItems)
-    console.log(requestedItems, `REQITEMS -${id}`)
+    console.log(requestedItems, `id ${id}`)
     return (
         <>
             <Drawer styles={{ body: { height: 'calc(100% - 85px)' } }} opened={opened} onClose={close} title={reqItemsError ? "Запросить материалы" : "Посмотреть запрошенные материалы"}
@@ -113,12 +108,6 @@ const ShowRequestedItems = ({ requestedItems }: { requestedItems: { item_id: num
         queryFn: async () => {
             const data = await rGetRequestedProducts(requestedItems);
             return data
-        },
-        onSuccess: (data) => {
-            // Handle success
-        },
-        onError: (error) => {
-            // Handle error
         },
 
     });
@@ -147,22 +136,24 @@ const AddItemsForm = ({ id }: { id: number }) => {
             const data = await rGetMasterProducts();
             return data
         },
-        onSuccess: (data) => {
-            // Handle success
-        },
-        onError: (error) => {
-            // Handle error
-        },
     });
+
     const { mutate, isLoading: mutationLoading, isError: mutationError } = useMutation({
         mutationFn: rMasterRequest,
         onSuccess: (data) => {
-            // Handle success
+            notifications.show({
+                title: 'Успешно',
+                message: 'Запрос мастера успешно отправлен',
+                color: 'green'
+            });
         },
         onError: (error) => {
-            // Handle error
+            notifications.show({
+                title: 'Ошибка',
+                message: 'Произошла ошибка при отправке запроса мастера',
+                color: 'red'
+            });
         },
-
     });
     const setCount = (id: number, value: number) => {
         setSelected({ ...selected, [id]: value })
