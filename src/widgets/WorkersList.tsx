@@ -43,7 +43,7 @@ const MastersTable = () => {
                                     <Text>Логин: {w.username}</Text>
                                 </Stack>
 
-                                <WorkStatusPieChart data={[{ name: "В процессе", value: w.waitingDetails }, { name: "Завершено", value: w.completed_details }, { name: "Всего", value: w.total_details }]} />
+                                <WorkStatusPieChart data={[{ name: "В процессе", value: w.waiting_details }, { name: "Завершено", value: w.completed_details }, { name: "Всего", value: w.total_details }]} />
                             </Group>
                         </Group>
                     </Paper>
@@ -58,7 +58,7 @@ const COLORS = ['#4CAF50', '#FFC107', '#2196F3'];
 
 function WorkStatusPieChart({ data }: { data: { name: string, value: number }[] }) {
     return (
-        <Box w={{ base: 290, sm: 300 }} h={300}>
+        <Box w={{ base: 290, sm: 300 }} h={330}>
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie

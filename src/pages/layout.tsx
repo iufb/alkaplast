@@ -66,7 +66,7 @@ export function BaseLayout() {
             navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
         >
             <AppShell.Header>
-                <Group h="100%" px="md" wrap='nowrap' justify='space-between'>
+                <Group w={'100vw'} h="100%" px="md" wrap='nowrap' justify='space-between' pr={20}>
                     <Link to={'/home'}>
                         <Image src={'/Logo.png'} w={'auto'} height={60} />
                     </Link>
@@ -75,9 +75,9 @@ export function BaseLayout() {
                             <CustomLink key={l.label} isFirst={true} href={l.href} label={l.label} sublinks={l.sublinks} />
                         )}
                     </Group>
-                    <Group w={{ base: 'auto', md: 340 }}>
+                    <Group >
                         <AuthStatus />
-                        <Logout visibleFrom='md' />
+                        {/* <Logout visibleFrom='md' /> */}
                         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                     </Group>
                 </Group>

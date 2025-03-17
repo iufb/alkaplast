@@ -24,6 +24,7 @@ const ManagerBoard = () => {
             return response;
         },
     });
+    console.log(data)
     return (
         <Stack>
             <Title order={4} c={'primary'}>Необработанные заявки</Title>
@@ -90,7 +91,7 @@ const Form = ({ applicationId, close }: ConnectProps & { close: () => void }) =>
                 message: 'Мастер успешно привязан',
                 color: 'green'
             });
-            queryClient.invalidateQueries({ queryKey: ['masterSelect'] });
+            queryClient.invalidateQueries({ queryKey: ['managerBoard'] });
         },
         onError: (error) => {
             notifications.show({

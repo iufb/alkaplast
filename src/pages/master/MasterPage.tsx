@@ -2,7 +2,7 @@ import { queryClient } from "@/main";
 import { rFinishApplication, rGetMasterApplications } from "@/shared/api/applications";
 import { rGetMasterProducts, rGetRequestedItems, rGetRequestedProducts, rMasterRequest } from "@/shared/api/products";
 import { ApplicationStatus, ImageFallback } from "@/shared/consts";
-import { Button, Drawer, Group, Image, Paper, ScrollArea, Select, Skeleton, Stack, Table, Text, Title } from "@mantine/core";
+import { Button, ButtonProps, Drawer, Group, Image, Modal, Paper, ScrollArea, Select, Skeleton, Stack, Table, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import dayjs from "dayjs";
@@ -28,7 +28,7 @@ const MasterBoard = () => {
     return (
         <Stack>
             <Title order={4} c={'primary'}>Необработанные заявки</Title>
-            {isLoading ? <Skeleton height={400} /> : (isError && !data) ? <Text c={'red'}>Ошибка загрузки...</Text> : data?.length == 0 ? <Text c={'secondary'}>Нет заявок</Text> :
+            {isLoading ? <Skeleton height={250} /> : (isError && !data) ? <Text c={'red'}>Ошибка загрузки...</Text> : data?.length == 0 ? <Text c={'secondary'}>Нет заявок</Text> :
                 <Table.ScrollContainer minWidth={290}>
                     <Table>
                         <Table.Thead>
@@ -37,6 +37,7 @@ const MasterBoard = () => {
                                 <Table.Th>Адрес</Table.Th>
                                 <Table.Th>Статус</Table.Th>
                                 <Table.Th>Дата отправки</Table.Th>
+                                <Table.Th>Данные окна</Table.Th>
                                 <Table.Th>Материалы</Table.Th>
                                 <Table.Th>Завершить</Table.Th>
                             </Table.Tr>
@@ -48,16 +49,33 @@ const MasterBoard = () => {
                                     <Table.Td>{a.address}</Table.Td>
                                     <Table.Td>{ApplicationStatus[a.status as keyof typeof ApplicationStatus]}</Table.Td>
                                     <Table.Td>{dayjs(a.created_at).format('DD-MM-YYYY')}</Table.Td>
+                                    <Table.Th><WindowData window_image={a.window_image} width={a.width} height={a.height} window_type={a.window_type} /></Table.Th>
                                     <Table.Td><RequestMaterials id={a.id} /></Table.Td>
                                     <Table.Td><Finish id={a.id} /></Table.Td>
                                 </Table.Tr>)}
                         </Table.Tbody>
-
                     </Table></Table.ScrollContainer>}
         </Stack>
     );
 }
-const Finish = ({ id }: { id: number }) => {
+const WindowData = ({ width, height, window_type, window_image }: { width: number, height: number, window_type: number, window_image: string }) => {
+    const [opened, { open, close }] = useDisclosure(false);
+
+    return (
+        <>
+            <Modal size={'lg'} opened={opened} onClose={close} title="Данные окна">
+
+                <Text fz={18} c={'primary'}>Ширина окна {width} cm</Text>
+                <Text fz={18} c={'primary'}>Высота окна {height} cm</Text>
+                <Text fz={18} c={'primary'}>Вид окна: </Text>
+                <Image maw={300} src={`/calculator/${window_image}`} />
+            </Modal>
+            <Button variant="default" onClick={open}>
+                Посмотреть
+            </Button>
+        </>)
+}
+const Finish = ({ id }: { id: number } & ButtonProps) => {
     const { mutate, isLoading, isError } = useMutation({
         mutationFn: rFinishApplication,
         onSuccess: (data) => {
@@ -80,23 +98,23 @@ const Finish = ({ id }: { id: number }) => {
 const RequestMaterials = ({ id }: { id: number }) => {
     const [opened, { open, close }] = useDisclosure(false);
     const { data: requestedItems, isLoading: reqItemsLoading, isError: reqItemsError } = useQuery({
-        queryKey: ['requestedItems'],
+        queryKey: [`requestedItems ${id}`],
         queryFn: async () => {
             const data = await rGetRequestedItems(id);
             return data
         },
     });
-    console.log(requestedItems, `id ${id}`)
+    const showAdd = requestedItems?.length == 0
     return (
         <>
             <Drawer styles={{ body: { height: 'calc(100% - 85px)' } }} opened={opened} onClose={close} title={reqItemsError ? "Запросить материалы" : "Посмотреть запрошенные материалы"}
             >
-                {reqItemsError ? <AddItemsForm id={id} /> : <ShowRequestedItems requestedItems={requestedItems} />}
+                {showAdd ? <AddItemsForm id={id} /> : <ShowRequestedItems requestedItems={requestedItems} />}
 
             </Drawer>
 
             <Button variant="default" onClick={open}>
-                {reqItemsError ? "Запросить" : "Посмотреть"}
+                {showAdd ? "Запросить" : "Посмотреть"}
             </Button>
         </>
     );
@@ -109,7 +127,6 @@ const ShowRequestedItems = ({ requestedItems }: { requestedItems: { item_id: num
             const data = await rGetRequestedProducts(requestedItems);
             return data
         },
-
     });
     return isLoading ? <Skeleton h={50} /> : (!data && isError) ? <Text c={'red'}>Ошибка загрузки...</Text> : <ScrollArea h={'100%'}>
         {data?.map((p: any) =>
@@ -159,7 +176,7 @@ const AddItemsForm = ({ id }: { id: number }) => {
         setSelected({ ...selected, [id]: value })
     }
 
-    return <> isLoading ? <Skeleton h={50} /> : (!data && isError) ? <Text c={'red'}>Ошибка загрузки...</Text> : <ScrollArea h={'100%'}>
+    return <> {isLoading ? <Skeleton h={50} /> : (!data && isError) ? <Text c={'red'}>Ошибка загрузки...</Text> : <ScrollArea h={'100%'}>
         {data?.map((p: any) =>
             <Paper shadow="lg" bg={'white'} p={5}>
                 <Group key={p.id}>
@@ -174,7 +191,7 @@ const AddItemsForm = ({ id }: { id: number }) => {
                 </Group>
             </Paper>
         )}
-    </ScrollArea>
+    </ScrollArea>}
         <Button fullWidth onClick={() => {
             mutate({ data: selected, detail_id: id })
         }}>

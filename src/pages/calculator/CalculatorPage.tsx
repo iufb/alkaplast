@@ -2,7 +2,7 @@ import { CreateApplication } from "@/features"
 import { Box, Center, Divider, Group, Image, NumberInput, SimpleGrid, Stack, StackProps, Text, Title } from "@mantine/core"
 import { useInputState } from "@mantine/hooks"
 import { useState } from "react"
-const variants = [
+export const variants = [
     {
         maxW: 150,
         scale: 1.2,
@@ -109,7 +109,7 @@ const Form = ({ windowProps, ...props }: CalculatorProps & StackProps) => {
                 </Stack>
             </Group>
             <Divider />
-            <CreateApplication>Заказать</CreateApplication>
+            <CreateApplication window_image={windowProps.url} disabled={+width == 0 || +height == 0} width={+width} height={+height} window_type={windowProps.scale}>Заказать</CreateApplication>
         </Stack>
     </form>
 }
