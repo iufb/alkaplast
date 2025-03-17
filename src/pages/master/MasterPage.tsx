@@ -2,15 +2,26 @@ import { queryClient } from "@/main";
 import { rFinishApplication, rGetMasterApplications } from "@/shared/api/applications";
 import { rGetMasterProducts, rGetRequestedItems, rGetRequestedProducts, rMasterRequest } from "@/shared/api/products";
 import { ApplicationStatus, ImageFallback } from "@/shared/consts";
+import { useAuth } from "@/shared/context/auth";
 import { Button, ButtonProps, Drawer, Group, Image, Modal, Paper, ScrollArea, Select, Skeleton, Stack, Table, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
+import { useNavigate } from "react-router";
 
 export const MasterPage = () => {
+    const { logout } = useAuth()
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        logout()
+        navigate('/home')
+    }
+
     return <Stack p={{ base: 10 }} pt={20} maw={1400} mx={'auto'}>
+
+        <Button onClick={handleLogout}>Выйти</Button>
         <Title ta={'center'} order={3} c={'primary'}>Панель управления для мастеров - Добро Пожаловать {localStorage.getItem('username')}</Title>
         <MasterBoard />
     </Stack>

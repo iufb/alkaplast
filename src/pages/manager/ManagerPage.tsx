@@ -2,15 +2,24 @@ import { queryClient } from "@/main";
 import { rGetManagerApplications } from "@/shared/api/applications";
 import { rChainMaster, rGetMasters } from "@/shared/api/workers";
 import { ApplicationStatus } from "@/shared/consts";
+import { useAuth } from "@/shared/context/auth";
 import { Box, Button, Drawer, Group, ScrollArea, Skeleton, Stack, Table, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import dayjs from "dayjs";
 import { FormEvent, useState } from "react";
 import { useMutation, useQuery } from "react-query";
+import { useNavigate } from "react-router";
 
 export const ManagerPage = () => {
+    const { logout } = useAuth()
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        logout()
+        navigate('/home')
+    }
     return <Stack p={{ base: 10 }} pt={20} maw={1400} mx={'auto'}>
+        <Button onClick={handleLogout}>Выйти</Button>
         <Title ta={'center'} order={3} c={'primary'}>Панель управления для менеджеров</Title>
         <ManagerBoard />
     </Stack>
