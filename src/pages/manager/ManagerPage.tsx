@@ -114,11 +114,12 @@ const Form = ({ applicationId, close }: ConnectProps & { close: () => void }) =>
         e.preventDefault()
         mutate({ "request_id": applicationId, "worker_id": selected })
     }
+    console.log(data, "DATA", selected)
 
     return <form onSubmit={submit} style={{ height: '100%' }} >
         <Stack h={'100%'}>
-            <ScrollArea>
-                {isLoading ? <Skeleton h={66} /> : (isError && !data) ? <Text>Ошибка загрузки</Text> : data?.map(w => <Group justify="space-evenly" onClick={() => setSelected(w.id)} c={'primary'} style={{ borderRadius: 10, border: selected != w.id ? "1px solid var(--mantine-color-primary-5)" : '1px solid var(--mantine-color-blue-8)' }} bg={selected ? 'slate.3' : 'white'} py={5} px={10}>
+            <ScrollArea >
+                {isLoading ? <Skeleton h={66} /> : (isError && !data) ? <Text>Ошибка загрузки</Text> : data?.map(w => <Group my={10} key={w.id} justify="space-evenly" onClick={() => setSelected(w.id)} c={'primary'} style={{ borderRadius: 10, border: selected != w.id ? "1px solid var(--mantine-color-primary-5)" : '1px solid var(--mantine-color-blue-8)' }} bg={selected == w.id ? 'slate.3' : 'white'} py={5} px={10}>
                     <Stack gap={5}>
                         <Text>
                             ФИО: {w.fio}
